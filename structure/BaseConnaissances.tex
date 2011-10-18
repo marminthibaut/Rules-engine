@@ -1,0 +1,254 @@
+\noindent
+\small{
+\scitef{package}\scitea{ }\scitel{structure}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scitef{import}\scitea{ }\scitel{java}\scitek{.}\scitel{util}\scitek{.}\scitel{ArrayList}\scitek{;}\scitea{} \\
+\scitef{import}\scitea{ }\scitel{java}\scitek{.}\scitel{util}\scitek{.}\scitel{Iterator}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scitef{import}\scitea{ }\scitel{java}\scitek{.}\scitel{io}\scitek{.}\scitel{BufferedReader}\scitek{;}\scitea{} \\
+\scitef{import}\scitea{ }\scitel{java}\scitek{.}\scitel{io}\scitek{.}\scitel{FileReader}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scited{/**} \\
+\scited{ * Représente une base de connaissance. Composée d'une base de faits (BaseFaits)} \\
+\scited{ * et d'une base de règles.} \\
+\scited{ * } \\
+\scited{ * }\sciter{$@$author}\scited{ Thibaut Marmin} \\
+\scited{ * } \\
+\scited{ */}\scitea{} \\
+\scitea{} \\
+\scitef{public}\scitea{ }\scitef{class}\scitea{ }\scitel{BaseConnaissances}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{private}\scitea{ }\scitel{BaseFaits}\scitea{ }\scitel{BF}\scitek{;}\scitec{// base de faits} \\
+\scitea{\hspace*{1em}}\scitef{private}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Regle}\scitek{$>$}\scitea{ }\scitel{BR}\scitek{;}\scitec{// base de règles} \\
+\scitea{\hspace*{1em}}\scitef{private}\scitea{ }\scitef{boolean}\scitea{ }\scitel{propositionalise}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{private}\scitea{ }\scitef{boolean}\scitea{ }\scitel{sature}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Constructeur d'un base de connaissance vide.} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{BaseConnaissances}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{super}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{BF}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{BaseFaits}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{BR}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Regle}\scitek{$>$();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{propositionalise}\scitea{ }\scitek{=}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{sature}\scitea{ }\scitek{=}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Constructeur d'une base de connaissance avec affectation de la base de} \\
+\scited{\hspace*{1em} * faits et de la base de règles.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ BF} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} La base de faits} \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ BR} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} La base de règles} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{BaseConnaissances}\scitek{(}\scitel{BaseFaits}\scitea{ }\scitel{BF}\scitek{,}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Regle}\scitek{$>$}\scitea{ }\scitel{BR}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{super}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{BF}\scitea{ }\scitek{=}\scitea{ }\scitel{BF}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{BR}\scitea{ }\scitek{=}\scitea{ }\scitel{BR}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{propositionalise}\scitea{ }\scitek{=}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{sature}\scitea{ }\scitek{=}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Constructeur d'une base de connaissance à partir d'un fichier. Le fichier} \\
+\scited{\hspace*{1em} * doit comporter un fait pas ligne, puis une ligne vide, puis une règle par} \\
+\scited{\hspace*{1em} * ligne.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ path} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} Chemin d'accès au fichier (relatif ou absolu)} \\
+\scited{\hspace*{1em} * }\sciter{$@$throws}\scited{ Exception} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} Retourne une exception lorsque la lecture du fichier échoue} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{BaseConnaissances}\scitek{(}\scitel{String}\scitea{ }\scitel{path}\scitek{)}\scitea{ }\scitef{throws}\scitea{ }\scitel{Exception}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{super}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{propositionalise}\scitea{ }\scitek{=}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{sature}\scitea{ }\scitek{=}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{BF}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{BaseFaits}\scitek{();;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{BR}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Regle}\scitek{$>$();}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{BufferedReader}\scitea{ }\scitel{lectureFichier}\scitea{ }\scitek{=}\scitea{ }\scitel{null}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{lectureFichier}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{BufferedReader}\scitek{(}\scitef{new}\scitea{ }\scitel{FileReader}\scitek{(}\scitel{path}\scitek{));}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{String}\scitea{ }\scitel{s}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{String}\scitea{ }\scitel{etape}\scitea{ }\scitek{=}\scitea{ }\sciteg{"faits"}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{try}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{while}\scitea{ }\scitek{(}\scitel{null}\scitea{ }\scitek{!=}\scitea{ }\scitek{(}\scitel{s}\scitea{ }\scitek{=}\scitea{ }\scitel{lectureFichier}\scitek{.}\scitel{readLine}\scitek{()))}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{s}\scitek{.}\scitel{equals}\scitek{(}\sciteg{""}\scitek{))}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{etape}\scitea{ }\scitek{=}\scitea{ }\sciteg{"regles"}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{s}\scitea{ }\scitek{=}\scitea{ }\scitel{lectureFichier}\scitek{.}\scitel{readLine}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{etape}\scitek{.}\scitel{equals}\scitek{(}\sciteg{"faits"}\scitek{))}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{ajouterFait}\scitek{(}\scitef{new}\scitea{ }\scitel{Atome}\scitek{(}\scitel{s}\scitek{));}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{ }\scitef{else}\scitea{ }\scitef{if}\scitea{ }\scitek{(}\scitel{etape}\scitek{.}\scitel{equals}\scitek{(}\sciteg{"regles"}\scitek{))}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{ajouterRegle}\scitek{(}\scitef{new}\scitea{ }\scitel{Regle}\scitek{(}\scitel{s}\scitek{));}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{ }\scitef{catch}\scitea{ }\scitek{(}\scitel{Exception}\scitea{ }\scitel{e}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{throw}\scitea{ }\scitef{new}\scitea{ }\scitel{Exception}\scitek{(}\sciteg{"Fichier incorrecte : "}\scitea{ }\scitek{+}\scitea{ }\scitel{e}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Ajoute une règle à la base de connaissance.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ R} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} La règle} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{void}\scitea{ }\scitel{ajouterRegle}\scitek{(}\scitel{Regle}\scitea{ }\scitel{R}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{BR}\scitek{.}\scitel{add}\scitek{(}\scitel{R}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Ajoute un fait à la base de connaissances si il ne contient pas de} \\
+\scited{\hspace*{1em} * variables. Sinon il est ajouté comme règle sans hypothèse.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ F} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} Le fait (l'Atome)} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{void}\scitea{ }\scitel{ajouterFait}\scitek{(}\scitel{Atome}\scitea{ }\scitel{F}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{F}\scitek{.}\scitel{contientVariable}\scitek{())}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{Regle}\scitea{ }\scitel{R}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{Regle}\scitek{(}\scitel{F}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{BR}\scitek{.}\scitel{add}\scitek{(}\scitel{R}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{ }\scitef{else}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{BF}\scitek{.}\scitel{ajouterNouveauFait}\scitek{(}\scitel{F}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Getter de la base de faits.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ la base de faits de la base de connaissances} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{BaseFaits}\scitea{ }\scitel{getBF}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{BF}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Getter de la base de règles.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ la base de règle associée à la base de connaissances} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Regle}\scitek{$>$}\scitea{ }\scitel{getBR}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{BR}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Formate la base de connaissance en une String} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ la base de connaissance formattée} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{String}\scitea{ }\scitel{toString}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{String}\scitea{ }\scitel{BRs}\scitea{ }\scitek{=}\scitea{ }\sciteg{"nombre de règles : "}\scitea{ }\scitek{+}\scitea{ }\scitel{BR}\scitek{.}\scitel{size}\scitek{()}\scitea{ }\scitek{+}\scitea{ }\sciteg{"{\textbackslash}n"}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitel{BR}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitel{i}\scitek{++)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{BRs}\scitea{ }\scitek{+=}\scitea{ }\sciteg{"Regle "}\scitea{ }\scitek{+}\scitea{ }\scitel{i}\scitea{ }\scitek{+}\scitea{ }\sciteg{"{\textbackslash}n"}\scitea{ }\scitek{+}\scitea{ }\scitel{BR}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{)}\scitea{ }\scitek{+}\scitea{ }\sciteg{"{\textbackslash}n"}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\sciteg{"Base de faits{\textbackslash}n"}\scitea{ }\scitek{+}\scitea{ }\scitel{BF}\scitea{ }\scitek{+}\scitea{ }\sciteg{"{\textbackslash}nBase de règles{\textbackslash}n"}\scitea{ }\scitek{+}\scitea{ }\scitel{BRs}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Permet de récupérer l'ensemble des constantes présentes dans la base de} \\
+\scited{\hspace*{1em} * connaissance.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ la liste des constantes (Terme constant) présents dans la base de} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} faits et dans les conclusions des règles} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Terme}\scitek{$>$}\scitea{ }\scitel{getEnsembleConstantes}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitec{// On récupere les constantes de la BF} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{ArrayList}\scitek{$<$}\scitel{Terme}\scitek{$>$}\scitea{ }\scitel{Constantes}\scitea{ }\scitek{=}\scitea{ }\scitef{this}\scitek{.}\scitel{BF}\scitek{.}\scitel{getEnsembleConstantes}\scitek{();}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitec{// Et celles des conlusions de la BR} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{Iterator}\scitek{$<$}\scitel{Regle}\scitek{$>$}\scitea{ }\scitel{it}\scitea{ }\scitek{=}\scitea{ }\scitel{BR}\scitek{.}\scitel{iterator}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{while}\scitea{ }\scitek{(}\scitel{it}\scitek{.}\scitel{hasNext}\scitek{())}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{Regle}\scitea{ }\scitel{r}\scitea{ }\scitek{=}\scitea{ }\scitek{(}\scitel{Regle}\scitek{)}\scitea{ }\scitel{it}\scitek{.}\scitel{next}\scitek{();}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{ArrayList}\scitek{$<$}\scitel{Terme}\scitek{$>$}\scitea{ }\scitel{lt}\scitea{ }\scitek{=}\scitea{ }\scitel{r}\scitek{.}\scitel{getConclusion}\scitek{().}\scitel{getListeTermes}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitel{lt}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitek{++}\scitel{i}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{lt}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{).}\scitel{estConstante}\scitek{()}\scitea{ }\scitek{\&\&}\scitea{ }\scitek{!}\scitel{Constantes}\scitek{.}\scitel{contains}\scitek{(}\scitel{lt}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{)))}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{Constantes}\scitek{.}\scitel{add}\scitek{(}\scitel{lt}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{));}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{Constantes}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Propositionalise la base de faits et la base de règles. /!{\textbackslash} La base de} \\
+\scited{\hspace*{1em} * règles originale n'est pas sauvegardée. La propositionalisation ne peut} \\
+\scited{\hspace*{1em} * avoir lieu qu'une fois.} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{void}\scitea{ }\scitel{propositionalisation}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{ArrayList}\scitek{$<$}\scitel{Regle}\scitek{$>$}\scitea{ }\scitel{BRprop}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Regle}\scitek{$>$();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{ArrayList}\scitek{$<$}\scitel{Terme}\scitek{$>$}\scitea{ }\scitel{Constantes}\scitea{ }\scitek{=}\scitea{ }\scitef{this}\scitek{.}\scitel{getEnsembleConstantes}\scitek{();}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(!}\scitel{propositionalise}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{Iterator}\scitek{$<$}\scitel{Regle}\scitek{$>$}\scitea{ }\scitel{it}\scitea{ }\scitek{=}\scitea{ }\scitel{BR}\scitek{.}\scitel{iterator}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{while}\scitea{ }\scitek{(}\scitel{it}\scitek{.}\scitel{hasNext}\scitek{())}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{Regle}\scitea{ }\scitel{r}\scitea{ }\scitek{=}\scitea{ }\scitek{(}\scitel{Regle}\scitek{)}\scitea{ }\scitel{it}\scitek{.}\scitel{next}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{BRprop}\scitek{.}\scitel{addAll}\scitek{(}\scitel{r}\scitek{.}\scitel{propositionaliser}\scitek{(}\scitel{Constantes}\scitek{,}\scitea{ }\scitef{this}\scitek{.}\scitel{BF}\scitek{));}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{BR}\scitea{ }\scitek{=}\scitea{ }\scitel{BRprop}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{propositionalise}\scitea{ }\scitek{=}\scitea{ }\scitel{true}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Sature la base de fait à partir de la base de règles de la base de} \\
+\scited{\hspace*{1em} * connaissances. Si la propositionalisation n'a pas eu lieu, alors celle-ci} \\
+\scited{\hspace*{1em} * est déclanchée. Si la saturation à déjà eu lieu, alors celle-ci n'aura} \\
+\scited{\hspace*{1em} * pas lieu.} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{void}\scitea{ }\scitel{saturer}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(!}\scitel{sature}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(!}\scitel{propositionalise}\scitek{)}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{propositionalisation}\scitek{();}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{boolean}\scitea{ }\scitel{fin}\scitea{ }\scitek{=}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{ArrayList}\scitek{$<$}\scitel{Atome}\scitek{$>$}\scitea{ }\scitel{NEW}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Atome}\scitek{$>$();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{while}\scitea{ }\scitek{(!}\scitel{fin}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{NEW}\scitek{.}\scitel{clear}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitef{this}\scitek{.}\scitel{BR}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitek{++}\scitel{i}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{Regle}\scitea{ }\scitel{R}\scitea{ }\scitek{=}\scitea{ }\scitef{this}\scitek{.}\scitel{BR}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(!}\scitel{NEW}\scitek{.}\scitel{contains}\scitek{(}\scitel{R}\scitek{.}\scitel{getConclusion}\scitek{())}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\&\&}\scitea{ }\scitek{!}\scitef{this}\scitek{.}\scitel{BF}\scitek{.}\scitel{getListeAtomes}\scitek{().}\scitel{contains}\scitek{(}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{R}\scitek{.}\scitel{getConclusion}\scitek{())}\scitea{ }\scitek{\&\&}\scitea{ }\scitel{R}\scitek{.}\scitel{validePar}\scitek{(}\scitef{this}\scitek{.}\scitel{BF}\scitek{))}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{NEW}\scitek{.}\scitel{add}\scitek{(}\scitel{R}\scitek{.}\scitel{getConclusion}\scitek{());}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{NEW}\scitek{.}\scitel{isEmpty}\scitek{())}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{fin}\scitea{ }\scitek{=}\scitea{ }\scitel{true}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{else}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitel{NEW}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitek{++}\scitel{i}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(!}\scitef{this}\scitek{.}\scitel{BF}\scitek{.}\scitel{getListeAtomes}\scitek{().}\scitel{contains}\scitek{(}\scitel{NEW}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{)))}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{BF}\scitek{.}\scitel{ajouterNouveauFait}\scitek{(}\scitel{NEW}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{));}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{sature}\scitea{ }\scitek{=}\scitea{ }\scitel{true}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Permet l'intérrogation de la base de faits.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ A} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} Question posée (Atome)} \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{boolean}\scitea{ }\scitel{question}\scitek{(}\scitel{Atome}\scitea{ }\scitel{A}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitef{this}\scitek{.}\scitel{BF}\scitek{.}\scitel{atomeExiste}\scitek{(}\scitel{A}\scitek{))}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{true}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{else}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitek{\}}
+} %end small

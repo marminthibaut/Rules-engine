@@ -1,0 +1,49 @@
+\noindent
+\small{
+\scitef{package}\scitea{ }\scitel{structure}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scitef{import}\scitea{ }\scitel{java}\scitek{.}\scitel{util}\scitek{.}\scitel{ArrayList}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scited{/**} \\
+\scited{ * Une substitution est une liste de couples de termes.} \\
+\scited{ * } \\
+\scited{ * }\sciter{$@$author}\scited{ Thibaut Marmin} \\
+\scited{ */}\scitea{} \\
+\scitea{} \\
+\scitef{public}\scitea{ }\scitef{class}\scitea{ }\scitel{Substitution}\scitea{ }\scitef{extends}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{CoupleTerme}\scitek{$>$}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Retourne la substitution à partir d'un terme. Par pour la substitution} \\
+\scited{\hspace*{1em} * \{\{x,'A'\},\{y,'B'\}\} et le terme T=x en paramètre, la fonction renvoit le} \\
+\scited{\hspace*{1em} * terme 'A'.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ T} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} le terme à substituer} \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ la substitution correspondante} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{Terme}\scitea{ }\scitel{getSubstitutionFor}\scitek{(}\scitel{Terme}\scitea{ }\scitel{T}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitef{this}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitek{++}\scitel{i}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitef{this}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{).}\scitel{getT1}\scitek{().}\scitel{equals}\scitek{(}\scitel{T}\scitek{))}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitef{this}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{).}\scitel{getT2}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{null}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * toString d'une substitution sous la forme \{\{T1\},\{T2\},...\}} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{String}\scitea{ }\scitel{toString}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{String}\scitea{ }\scitel{retour}\scitea{ }\scitek{=}\scitea{ }\sciteg{"\{"}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitef{this}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitek{++}\scitel{i}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{retour}\scitea{ }\scitek{+=}\scitea{ }\scitef{this}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitef{this}\scitek{.}\scitel{size}\scitek{()}\scitea{ }\scitek{-}\scitea{ }\scitee{1}\scitek{)}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{retour}\scitea{ }\scitek{+=}\scitea{ }\sciteg{","}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{retour}\scitea{ }\scitek{+=}\scitea{ }\sciteg{"\}"}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{retour}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitek{\}}\scitea{} \\
+\scitea{}
+} %end small

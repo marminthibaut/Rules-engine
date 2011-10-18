@@ -1,0 +1,82 @@
+\documentclass[a4paper]{article}
+\usepackage[a4paper,margin=2cm]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{color}
+\usepackage{alltt}
+\usepackage{times}
+\setlength{\fboxsep}{0pt}
+\newcommand{\scitea}[1]{\noindent{\ttfamily{\textcolor[rgb]{0.5, 0.5, 0.5}{\colorbox[rgb]{1.0, 1.0, 1.0}{#1}}}}}
+\newcommand{\scited}[1]{\noindent{\ttfamily{\textcolor[rgb]{0.2, 0.4, 0.2}{\colorbox[rgb]{1.0, 1.0, 1.0}{#1}}}}}
+\newcommand{\scitee}[1]{\noindent{\ttfamily{\textcolor[rgb]{0.0, 0.5, 0.5}{\colorbox[rgb]{1.0, 1.0, 1.0}{#1}}}}}
+\newcommand{\scitef}[1]{\noindent{\ttfamily{\textbf{\textcolor[rgb]{0.0, 0.0, 0.5}{\colorbox[rgb]{1.0, 1.0, 1.0}{#1}}}}}}
+\newcommand{\sciteg}[1]{\noindent{\ttfamily{\textcolor[rgb]{0.5, 0.0, 0.5}{\colorbox[rgb]{1.0, 1.0, 1.0}{#1}}}}}
+\newcommand{\scitek}[1]{\noindent{\ttfamily{\textbf{\textcolor[rgb]{0.0, 0.0, 0.0}{\colorbox[rgb]{1.0, 1.0, 1.0}{#1}}}}}}
+\newcommand{\scitel}[1]{\noindent{\ttfamily{\textcolor[rgb]{0.0, 0.0, 0.0}{\colorbox[rgb]{1.0, 1.0, 1.0}{#1}}}}}
+\newcommand{\sciter}[1]{\noindent{\ttfamily{\textcolor[rgb]{0.2, 0.4, 0.6}{\colorbox[rgb]{1.0, 1.0, 1.0}{#1}}}}}
+\newcommand{\sciteib}[1]{\noindent{\ttfamily{\textcolor[rgb]{0.0, 0.0, 0.0}{\colorbox[rgb]{1.0, 1.0, 1.0}{#1}}}}}
+\begin{document}
+
+Source File: SubstitutionsList.java
+
+\noindent
+\small{
+\scitef{package}\scitea{ }\scitel{structure}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scitef{import}\scitea{ }\scitel{java}\scitek{.}\scitel{util}\scitek{.}\scitel{ArrayList}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scited{/**} \\
+\scited{ * Représente une liste de substitutions.} \\
+\scited{ * } \\
+\scited{ * }\sciter{$@$author}\scited{ Thibaut Marmin} \\
+\scited{ */}\scitea{} \\
+\scitea{} \\
+\scitef{public}\scitea{ }\scitef{class}\scitea{ }\scitel{SubstitutionsList}\scitea{ }\scitef{extends}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Substitution}\scitek{$>$}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Effectue le produit cartésien entre une liste de couples de termes passée} \\
+\scited{\hspace*{1em} * de paramètre, et la liste de substitutions.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ sub} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} liste de couples de termes.} \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ une nouvelle SubstitutionList, résultat du produit cartésien} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{SubstitutionsList}\scitea{ }\scitel{produitCartesien}\scitek{(}\scitel{ArrayList}\scitek{$<$}\scitel{CoupleTerme}\scitek{$>$}\scitea{ }\scitel{sub}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{SubstitutionsList}\scitea{ }\scitel{NSL}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{SubstitutionsList}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitef{this}\scitek{.}\scitel{isEmpty}\scitek{())}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitel{sub}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitek{++}\scitel{i}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{Substitution}\scitea{ }\scitel{S}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{Substitution}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{S}\scitek{.}\scitel{add}\scitek{(}\scitel{sub}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{));}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{NSL}\scitek{.}\scitel{add}\scitek{(}\scitel{S}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{ }\scitef{else}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitef{this}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitek{++}\scitel{i}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{j}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{j}\scitea{ }\scitek{$<$}\scitea{ }\scitel{sub}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitek{++}\scitel{j}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{Substitution}\scitea{ }\scitel{S}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{Substitution}\scitek{();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{S}\scitek{.}\scitel{addAll}\scitek{(}\scitef{this}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{));}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{S}\scitek{.}\scitel{add}\scitek{(}\scitel{sub}\scitek{.}\scitel{get}\scitek{(}\scitel{j}\scitek{));}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{NSL}\scitek{.}\scitel{add}\scitek{(}\scitel{S}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{NSL}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * toString d'une liste de substitutions sous la forme \{\{S1\},\{S2\},...\}} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{String}\scitea{ }\scitel{toString}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{String}\scitea{ }\scitel{retour}\scitea{ }\scitek{=}\scitea{ }\sciteg{"\{{\textbackslash}n"}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitef{this}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitek{++}\scitel{i}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{retour}\scitea{ }\scitek{+=}\scitea{ }\sciteg{"{\textbackslash}t"}\scitea{ }\scitek{+}\scitea{ }\scitef{this}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitef{this}\scitek{.}\scitel{size}\scitek{()}\scitea{ }\scitek{-}\scitea{ }\scitee{1}\scitek{)}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{retour}\scitea{ }\scitek{+=}\scitea{ }\sciteg{",{\textbackslash}n"}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{else}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{retour}\scitea{ }\scitek{+=}\scitea{ }\sciteg{"{\textbackslash}n"}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{retour}\scitea{ }\scitek{+=}\scitea{ }\sciteg{"\}"}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{retour}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitek{\}}\scitea{} \\
+\scitea{}
+} %end small

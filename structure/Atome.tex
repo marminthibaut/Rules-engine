@@ -1,0 +1,200 @@
+\noindent
+\small{
+\scitef{package}\scitea{ }\scitel{structure}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scitef{import}\scitea{ }\scitel{java}\scitek{.}\scitel{util}\scitek{.}\scitel{ArrayList}\scitek{;}\scitea{} \\
+\scitea{} \\
+\scited{/**} \\
+\scited{ * Représente un Atome (symbole propositionnel). Il est composé d'un label (nom} \\
+\scited{ * du prédicat) et d'aucun ou plusieurs termes.} \\
+\scited{ * } \\
+\scited{ * }\sciter{$@$author}\scited{ ML Mugnier} \\
+\scited{ * }\sciter{$@$author}\scited{ Thibaut Marmin} \\
+\scited{ */}\scitea{} \\
+\scitea{} \\
+\scitef{public}\scitea{ }\scitef{class}\scitea{ }\scitel{Atome}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{private}\scitea{ }\scitel{String}\scitea{ }\scitel{label}\scitek{;}\scitea{ }\scitec{// le prédicat de l'atome} \\
+\scitea{\hspace*{1em}}\scitef{private}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Terme}\scitek{$>$}\scitea{ }\scitel{listeTermes}\scitek{;}\scitea{ }\scitec{// la liste de termes de cet atome} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Constructeur de la classe Atome Crée un atome, avec ou sans termes} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ s} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} l'atome, soit réduit à un nom de prédicat, soit de la forme} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} prédicat(liste de termes), où les termes sont séparés par des} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} virgules} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{Atome}\scitek{(}\scitel{String}\scitea{ }\scitel{s}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{listeTermes}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Terme}\scitek{$>$();}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{s}\scitek{.}\scitel{charAt}\scitek{(}\scitel{s}\scitek{.}\scitel{length}\scitek{()}\scitea{ }\scitek{-}\scitea{ }\scitee{1}\scitek{)}\scitea{ }\scitek{!=}\scitea{ }\sciteh{')'}\scitek{)}\scitea{ }\scitec{// c'est donc un atome sans termes} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{label}\scitea{ }\scitek{=}\scitea{ }\scitel{s}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{else}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{int}\scitea{ }\scitel{cpt}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{String}\scitea{ }\scitel{nomAtome}\scitea{ }\scitek{=}\scitea{ }\sciteg{""}\scitek{;}\scitec{// pour construire le label de l'atome} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{String}\scitea{ }\scitel{nomTerme}\scitea{ }\scitek{=}\scitea{ }\sciteg{""}\scitek{;}\scitec{// pour construire le terme courant} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{boolean}\scitea{ }\scitel{constanteTerme}\scitek{;}\scitec{// le terme courant-il est une constante ou} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// non} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{while}\scitea{ }\scitek{(}\scitel{s}\scitek{.}\scitel{charAt}\scitek{(}\scitel{cpt}\scitek{)}\scitea{ }\scitek{!=}\scitea{ }\sciteh{')'}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{while}\scitea{ }\scitek{(}\scitel{s}\scitek{.}\scitel{charAt}\scitek{(}\scitel{cpt}\scitek{)}\scitea{ }\scitek{!=}\scitea{ }\sciteh{'('}\scitek{)}\scitec{// On récupère le label de l'atome} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{nomAtome}\scitea{ }\scitek{+=}\scitea{ }\scitel{s}\scitek{.}\scitel{charAt}\scitek{(}\scitel{cpt}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{cpt}\scitek{++;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{label}\scitea{ }\scitek{=}\scitea{ }\scitel{nomAtome}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{cpt}\scitek{++;}\scitec{// Pour sauter le '('} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{while}\scitea{ }\scitek{(}\scitel{s}\scitek{.}\scitel{charAt}\scitek{(}\scitel{cpt}\scitek{)}\scitea{ }\scitek{!=}\scitea{ }\sciteh{')'}\scitek{)}\scitec{// On va désormais s'intéresser aux} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// termes de l'atome} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{while}\scitea{ }\scitek{(}\scitel{s}\scitek{.}\scitel{charAt}\scitek{(}\scitel{cpt}\scitek{)}\scitea{ }\scitek{!=}\scitea{ }\sciteh{','}\scitea{ }\scitek{\&\&}\scitea{ }\scitel{s}\scitek{.}\scitel{charAt}\scitek{(}\scitel{cpt}\scitek{)}\scitea{ }\scitek{!=}\scitea{ }\sciteh{')'}\scitek{)}\scitec{// On} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// récupère} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// le} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// label} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// du} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// terme} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{nomTerme}\scitea{ }\scitek{+=}\scitea{ }\scitel{s}\scitek{.}\scitel{charAt}\scitek{(}\scitel{cpt}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{cpt}\scitek{++;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{nomTerme}\scitek{.}\scitel{charAt}\scitek{(}\scitee{0}\scitek{)}\scitea{ }\scitek{==}\scitea{ }\sciteh{'{\textbackslash}''}\scitek{)}\scitec{// On teste si le terme est} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// une constante} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{constanteTerme}\scitea{ }\scitek{=}\scitea{ }\scitel{true}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{nomTerme}\scitea{ }\scitek{=}\scitea{ }\scitel{nomTerme}\scitek{.}\scitel{substring}\scitek{(}\scitee{1}\scitek{,}\scitea{ }\scitel{nomTerme}\scitek{.}\scitel{length}\scitek{()}\scitea{ }\scitek{-}\scitea{ }\scitee{1}\scitek{);}\scitec{// Si} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// c'est} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// une} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// constante} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// alors} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// on} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// supprime} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// les} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// "'"} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{ }\scitef{else}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{constanteTerme}\scitea{ }\scitek{=}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{Terme}\scitea{ }\scitel{t}\scitea{ }\scitek{=}\scitea{ }\scitef{new}\scitea{ }\scitel{Terme}\scitek{(}\scitel{nomTerme}\scitek{,}\scitea{ }\scitel{constanteTerme}\scitek{);}\scitec{// On crée un} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// nouveau} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// terme} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{listeTermes}\scitek{.}\scitel{add}\scitek{(}\scitel{t}\scitek{);}\scitec{// On ajoute le terme créé s'il} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitec{// n'existait pas déjà} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{nomTerme}\scitea{ }\scitek{=}\scitea{ }\sciteg{""}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{s}\scitek{.}\scitel{charAt}\scitek{(}\scitel{cpt}\scitek{)}\scitea{ }\scitek{==}\scitea{ }\sciteh{','}\scitek{)}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{cpt}\scitek{++;}\scitec{// Pour sauter le ','} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Ajoute le Terme 't' à la liste de termes de l'atome, sans autre} \\
+\scited{\hspace*{1em} * vérification} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ t} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} le terme à ajouter} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{void}\scitea{ }\scitel{ajoutTerme}\scitek{(}\scitel{Terme}\scitea{ }\scitel{t}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{listeTermes}\scitek{.}\scitel{add}\scitek{(}\scitel{t}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Getter de la liste des termes} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ Liste des termes de l'atome} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{ArrayList}\scitek{$<$}\scitel{Terme}\scitek{$>$}\scitea{ }\scitel{getListeTermes}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{listeTermes}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Setter de la liste des termes} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ listeTermes} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} Liste des termes de l'atome} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{void}\scitea{ }\scitel{setListeTermes}\scitek{(}\scitel{ArrayList}\scitek{$<$}\scitel{Terme}\scitek{$>$}\scitea{ }\scitel{listeTermes}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{this}\scitek{.}\scitel{listeTermes}\scitea{ }\scitek{=}\scitea{ }\scitel{listeTermes}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Getter du label} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ label} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{String}\scitea{ }\scitel{getLabel}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{label}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{boolean}\scitea{ }\scitel{contientVariable}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitef{this}\scitek{.}\scitel{listeTermes}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitek{++}\scitel{i}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitef{this}\scitek{.}\scitel{listeTermes}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{).}\scitel{estVariable}\scitek{())}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{true}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Teste l'egalité des prédicats de deux atomes avec le label et l'arité de} \\
+\scited{\hspace*{1em} * l'atome} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ r} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} l'atome à tester par rapport à l'atome courant} \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ vrai si les deux atomes ont même prédicat, faux sinon} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{boolean}\scitea{ }\scitel{equalsP}\scitek{(}\scitel{Atome}\scitea{ }\scitel{r}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitek{(}\scitef{this}\scitek{.}\scitel{label}\scitek{.}\scitel{equals}\scitek{(}\scitel{r}\scitek{.}\scitel{label}\scitek{)}\scitea{ }\scitek{\&\&}\scitea{ }\scitel{listeTermes}\scitek{.}\scitel{size}\scitek{()}\scitea{ }\scitek{==}\scitea{ }\scitel{r}\scitek{.}\scitel{listeTermes}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitek{.}\scitel{size}\scitek{());}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Teste l'egalité de deux atomes (même label et même liste de termes)} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ r} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} l'atome à tester par rapport à l'atome courant} \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ vrai si les deux atomes sont égaux, faux sinon} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{boolean}\scitea{ }\scitel{equalsA}\scitek{(}\scitel{Atome}\scitea{ }\scitel{r}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(!}\scitel{equalsP}\scitek{(}\scitel{r}\scitek{))}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitel{listeTermes}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitel{i}\scitek{++)}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(!}\scitel{listeTermes}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{).}\scitel{equals}\scitek{(}\scitel{r}\scitek{.}\scitel{listeTermes}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{)))}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{true}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Redéfinition de la fonction equals. De comparer génériquement deux} \\
+\scited{\hspace*{1em} * atomes.} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$param}\scited{ o} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} Un object} \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ Booléen à vrai si this = 0, faux sinon} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitef{boolean}\scitea{ }\scitel{equals}\scitek{(}\scitel{Object}\scitea{ }\scitel{o}\scitek{)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(!(}\scitel{o}\scitea{ }\scitef{instanceof}\scitea{ }\scitel{Atome}\scitek{))}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{false}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{else}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{equalsA}\scitek{((}\scitel{Atome}\scitek{)}\scitea{ }\scitel{o}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitea{\hspace*{1em}}\scited{/**} \\
+\scited{\hspace*{1em} * Retourne la chaîne de caractères de cet atome} \\
+\scited{\hspace*{1em} * } \\
+\scited{\hspace*{1em} * }\sciter{$@$return}\scited{ la chaîne décrivant l'atome (suivant l'écriture logique} \\
+\scited{\hspace*{1em} *{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}}{\hspace*{1em}} habituelle)} \\
+\scited{\hspace*{1em} */}\scitea{} \\
+\scitea{\hspace*{1em}}\scitef{public}\scitea{ }\scitel{String}\scitea{ }\scitel{toString}\scitek{()}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{String}\scitea{ }\scitel{s}\scitea{ }\scitek{=}\scitea{ }\scitel{label}\scitea{ }\scitek{+}\scitea{ }\sciteg{"("}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{for}\scitea{ }\scitek{(}\scitef{int}\scitea{ }\scitel{i}\scitea{ }\scitek{=}\scitea{ }\scitee{0}\scitek{;}\scitea{ }\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitel{listeTermes}\scitek{.}\scitel{size}\scitek{();}\scitea{ }\scitel{i}\scitek{++)}\scitea{ }\scitek{\{}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{s}\scitea{ }\scitek{+=}\scitea{ }\scitel{listeTermes}\scitek{.}\scitel{get}\scitek{(}\scitel{i}\scitek{);}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitef{if}\scitea{ }\scitek{(}\scitel{i}\scitea{ }\scitek{$<$}\scitea{ }\scitel{listeTermes}\scitek{.}\scitel{size}\scitek{()}\scitea{ }\scitek{-}\scitea{ }\scitee{1}\scitek{)}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}\hspace*{1em}\hspace*{1em}}\scitel{s}\scitea{ }\scitek{+=}\scitea{ }\sciteg{","}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitel{s}\scitea{ }\scitek{+=}\scitea{ }\sciteg{")"}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}\hspace*{1em}}\scitef{return}\scitea{ }\scitel{s}\scitek{;}\scitea{} \\
+\scitea{\hspace*{1em}}\scitek{\}}\scitea{} \\
+\scitea{} \\
+\scitek{\}}\scitea{} \\
+\scitea{}
+} %end small
