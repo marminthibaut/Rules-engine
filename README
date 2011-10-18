@@ -13,6 +13,34 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 **************************************************************************
 
+Moteur de règles d'ordre 1.
+
+Charge un fichier décrivant la base de connaissance. Voici un exemple de
+fichier :
+
+[Begin]
+possede('Nono','M1')
+hostile('Nono')
+americain('West')
+missile('M1')
+
+possede('Nono',x);missile(x);vend('West',x,'Nono')
+americain(x);vend(x,y,z);hostile(z);arme(y);criminel(x)
+missile(x);arme(x)
+[End]
+
+La première partie décrit la base de faits, la seconde décrit la base de
+règles. Les deux étant séparés par une (et une seule) ligne vide.
+
+/!\ Ne pas ajouter de ligne vides avant les faits et après les règles.
+
+Les constantes sont écrites entre quotes, et variables non.
+
+Le dernier terme d'une règle correspond à sa conclusion.
+
+
+**************************************************************************
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
