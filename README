@@ -18,7 +18,7 @@ Moteur de règles d'ordre 1.
 Charge un fichier décrivant la base de connaissance. Voici un exemple de
 fichier :
 
-[Begin]
+[Begin Of File]
 possede('Nono','M1')
 hostile('Nono')
 americain('West')
@@ -27,7 +27,7 @@ missile('M1')
 possede('Nono',x);missile(x);vend('West',x,'Nono')
 americain(x);vend(x,y,z);hostile(z);arme(y);criminel(x)
 missile(x);arme(x)
-[End]
+[End Of File]
 
 La première partie décrit la base de faits, la seconde décrit la base de
 règles. Les deux étant séparés par une (et une seule) ligne vide.
